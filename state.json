@@ -1,1 +1,22 @@
-{"telegram_offset": 0, "pending_messages": [], "digested_uids": []}
+{
+  "telegram_offset": 518699180,
+  "pending_messages": [
+    {
+      "text": "ngày 28/4 đưa con đi đá bóng",
+      "from": "Anh",
+      "events": [
+        "📌 ngày 28/4 đưa con đi đá bóng"
+      ],
+      "received": "2026-07-08T19:46:30.566159+07:00"
+    },
+    {
+      "text": "ngày 28/7 đưa con đi đá bóng",
+      "from": "Anh",
+      "events": [
+        "📌 ngày 28/7 đưa con đi đá bóng"
+      ],
+      "received": "2026-07-08T19:46:30.566159+07:00"
+    }
+  ],
+  "digested_uids": []
+}
