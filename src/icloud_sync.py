@@ -50,6 +50,46 @@ def _with_alarm(ev: Event, minutes_before: int) -> Event:
     return ev
 
 
+def _with_deadline_alarms(ev: Event) -> Event:
+    """Cho event cả-ngày (deadline): báo 9h sáng hôm trước + 7h sáng đúng ngày."""
+    for delta, desc in [(dt.timedelta(hours=-15), "Nhắc trước 1 ngày"),
+                        (dt.timedelta(hours=7), "Nhắc trong ngày")]:
+        alarm = Alarm()
+        alarm.add("action", "DISPLAY")
+        alarm.add("description", desc)
+        alarm.add("trigger", delta)
+        ev.add_component(alarm)
+    return ev
+
+
+def list_upcoming(cal: caldav.Calendar, start: dt.datetime,
+                  end: dt.datetime) -> list[tuple[dt.date, str, str]]:
+    """Liệt kê event trong khoảng [start, end): (ngày, giờ_hiển_thị, tiêu_đề).
+    Bỏ qua các event digest."""
+    items = []
+    try:
+        found = cal.search(start=start, end=end, event=True, expand=True)
+    except Exception as e:
+        print(f"[warn] Không đọc được event sắp tới: {e}")
+        return items
+    for obj in found:
+        try:
+            vev = obj.icalendar_component
+            uid = str(vev.get("uid", ""))
+            summary = str(vev.get("summary", ""))
+            if "digest" in uid.split("@")[0] or summary.startswith("📋"):
+                continue
+            dtstart = vev.get("dtstart").dt
+            if isinstance(dtstart, dt.datetime):
+                items.append((dtstart.date(), dtstart.strftime("%H:%M"), summary))
+            else:
+                items.append((dtstart, "cả ngày", summary))
+        except Exception:
+            continue
+    items.sort(key=lambda x: (x[0], x[1]))
+    return items
+
+
 def upsert(cal: caldav.Calendar, event: Event) -> None:
     uid = str(event["uid"])
     try:
@@ -137,7 +177,7 @@ def upsert_parsed_event(cal: caldav.Calendar, e: dict, source_text: str,
     else:
         ev.add("dtstart", date)
         ev.add("dtend", date + dt.timedelta(days=1))
-        _with_alarm(ev, 0)
+        _with_deadline_alarms(ev)
     upsert(cal, ev)
     return uid
 

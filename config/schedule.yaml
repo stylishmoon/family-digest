@@ -1,34 +1,16 @@
 # ============================================================
-# LỊCH CỐ ĐỊNH CỦA GIA ĐÌNH
-# Sửa file này rồi push lên GitHub, lần chạy kế tiếp sẽ tự cập nhật iCloud
+# CẤU HÌNH FAMILY DIGEST
+# Calendar này CHỈ chứa việc bất thường (deadline, thay đổi lịch,
+# đăng ký...) paste vào bot Telegram. Không có lịch lặp cố định.
 # ============================================================
 
 timezone: Asia/Ho_Chi_Minh
-calendar_name: "Gia đình"        # Tên calendar trên iCloud (tạo trước, share cho vợ)
+calendar_name: "Gia đình"
 
 digest:
-  time: "06:30"                  # Giờ tạo event "Tóm tắt hôm nay"
-  alert_minutes_before: 0        # Báo đúng giờ
+  time: "06:30"
+  alert_minutes_before: 0
 
-activities:
-  - name: "⚽ Đá banh - Bin"
-    days: [TU, TH]               # MO TU WE TH FR SA SU
-    start_time: "17:00"
-    end_time: "18:30"
-    location: "Sân ABC, Quận X"
-    course_start: "2026-06-01"   # Ngày bắt đầu khóa
-    course_end: "2026-08-30"     # Ngày kết thúc khóa
-    alert_minutes_before: 60     # Nhắc trước 60 phút
-    remind_course_end_days: 7    # Nhắc trước khi hết khóa 7 ngày (đóng tiền/gia hạn)
-
-  - name: "🏸 Cầu lông - Bin"
-    days: [SA]
-    start_time: "08:00"
-    end_time: "09:30"
-    location: "Nhà thi đấu Y"
-    course_start: "2026-06-15"
-    course_end: "2026-09-15"
-    alert_minutes_before: 90
-    remind_course_end_days: 7
-
-# Thêm lớp học chính / học thêm khác theo mẫu trên
+# Không dùng lịch cố định. Nếu sau này cần, thêm block theo mẫu
+# trong README (đá banh, cầu lông... với RRULE hàng tuần).
+activities: []

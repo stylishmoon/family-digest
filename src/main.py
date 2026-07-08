@@ -65,19 +65,17 @@ def main() -> None:
     if os.environ.get("DIGEST_RUN") == "1":
         lines = [f"🗓 {today.strftime('%A %d/%m/%Y')}", ""]
 
-        # Hoạt động cố định hôm nay
-        wd = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"][today.weekday()]
-        todays = [a for a in cfg.get("activities", [])
-                  if wd in a["days"]
-                  and dt.date.fromisoformat(str(a["course_start"])) <= today
-                  <= dt.date.fromisoformat(str(a["course_end"]))]
-        if todays:
-            lines.append("Hôm nay:")
-            for a in todays:
-                lines.append(f"• {a['start_time']}–{a['end_time']} {a['name']}"
-                             + (f" ({a['location']})" if a.get("location") else ""))
+        # Các việc trong 7 ngày tới (đọc từ chính calendar)
+        start = dt.datetime.combine(today, dt.time.min, tzinfo=tz)
+        end = start + dt.timedelta(days=7)
+        upcoming = icloud_sync.list_upcoming(cal, start, end)
+        if upcoming:
+            lines.append("7 ngày tới:")
+            for day, time_str, title in upcoming:
+                label = "Hôm nay" if day == today else day.strftime("%a %d/%m")
+                lines.append(f"• {label} · {time_str} · {title}")
         else:
-            lines.append("Hôm nay không có lịch cố định.")
+            lines.append("7 ngày tới chưa có việc gì cần nhớ. 🎉")
 
         # Thông báo mới từ group kể từ digest trước
         if state["pending_messages"]:
@@ -85,7 +83,7 @@ def main() -> None:
             lines.append(f"Thông báo mới ({len(state['pending_messages'])}):")
             for p in state["pending_messages"]:
                 first = p["text"].strip().splitlines()[0][:80]
-                tag = " ✅ đã lên lịch" if p["events"] else ""
+                tag = " ✅ đã lên lịch" if p["events"] else " ⚠️ chưa nhận diện được ngày"
                 lines.append(f"• {first}{tag}")
             state["pending_messages"] = []
 
