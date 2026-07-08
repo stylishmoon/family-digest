@@ -1,5 +1,5 @@
 {
-  "telegram_offset": 518699183,
+  "telegram_offset": 518699186,
   "pending_messages": [
     {
       "text": "ngày 28/4 đưa con đi đá bóng",
@@ -38,6 +38,39 @@
         "Đóng tiền mạng"
       ],
       "received": "2026-07-08T20:57:40.607030+07:00"
+    },
+    {
+      "text": "cập nhật lịch giải đá bóng của Siêu Nhân tối 6h các ngày trên",
+      "from": "Anh",
+      "events": [
+        "Giải đá bóng Siêu Nhân U7 NANTES",
+        "Giải đá bóng Siêu Nhân U7 NANTES",
+        "Giải đá bóng Siêu Nhân U7 NANTES",
+        "Giải đá bóng Siêu Nhân U7 NANTES",
+        "Giải đá bóng Siêu Nhân U7 NANTES",
+        "Giải đá bóng Siêu Nhân U7 NANTES",
+        "Giải đá bóng Siêu Nhân U7 NANTES",
+        "Giải đá bóng Siêu Nhân U7 NANTES",
+        "Giải đá bóng Siêu Nhân U7 NANTES - Chủ nhật cuối cùng"
+      ],
+      "received": "2026-07-08T21:23:30.551204+07:00"
+    },
+    {
+      "text": "lịch đăng kí mua đồng phục cho Siêu Nhân",
+      "from": "Anh",
+      "events": [
+        "Thời gian liên hệ mua đồng phục - Ca sáng",
+        "Thời gian liên hệ mua đồng phục - Ca chiều"
+      ],
+      "received": "2026-07-08T21:23:30.551204+07:00"
+    },
+    {
+      "text": "lịch và thông tin đăng kí mua sách giáo khoa cho Siêu Nhân",
+      "from": "Anh",
+      "events": [
+        "Phụ huynh liên hệ đăng ký với GVNN"
+      ],
+      "received": "2026-07-08T21:23:30.551204+07:00"
     }
   ],
   "digested_uids": []
