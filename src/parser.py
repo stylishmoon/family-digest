@@ -40,6 +40,12 @@ def _build_prompt(today: dt.date, extra: str = "") -> str:
         'Nếu tin mô tả lịch lặp (vd "từ 15/7 đến 30/7, thứ 2 thứ 6 hàng tuần"): '
         '"date" là NGÀY DIỄN RA ĐẦU TIÊN khớp các thứ đã nêu, "repeat.days" là các thứ, '
         '"repeat.until" là ngày kết thúc. Lịch một lần thì "repeat": null. '
+	'PHÂN BIỆT QUAN TRỌNG: nếu tin chỉ nêu KHUNG GIỜ LIÊN HỆ/LÀM VIỆC/MỞ CỬA '
+        'lặp hàng ngày để làm một việc MỘT LẦN (vd mua đồng phục, nộp hồ sơ, '
+        'đóng tiền trong giờ hành chính): KHÔNG dùng "repeat" — tạo 1 deadline '
+        'ngày cuối cùng, ghi khung giờ liên hệ vào "note". '
+        'Chỉ dùng "repeat" cho hoạt động phải THAM DỰ nhiều buổi '
+        '(lớp học, học bù, tập luyện). '
         'Trường "note" phải tóm tắt đủ chi tiết quan trọng (địa điểm, khung giờ, '
         "lưu ý, số điện thoại liên hệ nếu có). "
         "Nếu không chứa sự kiện nào xác định được ngày, trả về []. "
