@@ -44,13 +44,14 @@ def parse_with_claude(text: str, today: dt.date, api_key: str) -> list[dict]:
             "content-type": "application/json",
         },
         json={
-            "model": "laude-haiku-4-5",
+            "model": "claude-haiku-4-5",
             "max_tokens": 1000,
             "messages": [{"role": "user", "content": prompt}],
         },
         timeout=60,
     )
-    resp.raise_for_status()
+    if resp.status_code != 200:
+        raise RuntimeError(f"API {resp.status_code}: {resp.text[:300]}")
     raw = "".join(b.get("text", "") for b in resp.json()["content"])
     raw = raw.replace("```json", "").replace("```", "").strip()
     try:
