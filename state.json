@@ -1,5 +1,5 @@
 {
-  "telegram_offset": 518699180,
+  "telegram_offset": 518699181,
   "pending_messages": [
     {
       "text": "ngày 28/4 đưa con đi đá bóng",
@@ -16,6 +16,14 @@
         "📌 ngày 28/7 đưa con đi đá bóng"
       ],
       "received": "2026-07-08T19:46:30.566159+07:00"
+    },
+    {
+      "text": "ngày 10/7 đóng tiền điện",
+      "from": "Anh",
+      "events": [
+        "📌 ngày 10/7 đóng tiền điện"
+      ],
+      "received": "2026-07-08T20:12:08.864814+07:00"
     }
   ],
   "digested_uids": []
