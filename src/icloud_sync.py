@@ -155,8 +155,10 @@ def upsert_recurring_activity(cal: caldav.Calendar, act: dict, tz: ZoneInfo) -> 
 
 def upsert_parsed_event(cal: caldav.Calendar, e: dict, source_text: str,
                         tz: ZoneInfo) -> str:
-    """Event trích từ thông báo group. Trả về UID."""
-    uid = _uid("announce", e["date"], e.get("time") or "", e["title"])
+    """Event trích từ thông báo group (một lần hoặc lặp). Trả về UID."""
+    repeat = e.get("repeat") or None
+    uid = _uid("announce", e["date"], e.get("time") or "", e["title"],
+               str(repeat) if repeat else "")
     ev = Event()
     ev.add("uid", uid)
     ev.add("summary", e["title"])
@@ -178,6 +180,17 @@ def upsert_parsed_event(cal: caldav.Calendar, e: dict, source_text: str,
         ev.add("dtstart", date)
         ev.add("dtend", date + dt.timedelta(days=1))
         _with_deadline_alarms(ev)
+
+    if repeat and repeat.get("days") and repeat.get("until"):
+        until_date = dt.date.fromisoformat(repeat["until"])
+        ev.add("rrule", {
+            "freq": "weekly",
+            "byday": [d for d in repeat["days"]
+                      if d in ("MO", "TU", "WE", "TH", "FR", "SA", "SU")],
+            # RFC 5545: UNTIL ở UTC khi DTSTART có TZID
+            "until": dt.datetime(until_date.year, until_date.month, until_date.day,
+                                 23, 59, tzinfo=tz).astimezone(dt.timezone.utc),
+        })
     upsert(cal, ev)
     return uid
 

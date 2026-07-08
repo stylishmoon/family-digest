@@ -22,13 +22,18 @@ VN_WEEKDAYS = {"thứ 2": 0, "thứ hai": 0, "thứ 3": 1, "thứ ba": 1,
 
 def parse_with_claude(text: str, today: dt.date, api_key: str) -> list[dict]:
     prompt = (
-        "Bạn là bộ trích xuất sự kiện từ thông báo của nhóm phụ huynh Việt Nam. "
+        "Bạn là bộ trích xuất sự kiện từ tin nhắn của gia đình Việt Nam. "
         f"Hôm nay là {today.isoformat()} ({today.strftime('%A')}). "
         "Đọc tin nhắn sau và trả về DUY NHẤT một JSON array (không markdown, không giải thích). "
         'Mỗi phần tử: {"title": str, "date": "YYYY-MM-DD", "time": "HH:MM" hoặc null, '
-        '"end_time": "HH:MM" hoặc null, "note": str}. '
-        "Quy đổi các mốc tương đối (mai, tối thứ 5, tuần sau...) ra ngày cụ thể. "
-        "Nếu tin không chứa sự kiện nào có ngày xác định được, trả về []. "
+        '"end_time": "HH:MM" hoặc null, "note": str, '
+        '"repeat": null hoặc {"days": ["MO"|"TU"|"WE"|"TH"|"FR"|"SA"|"SU", ...], '
+        '"until": "YYYY-MM-DD"}}. '
+        "Quy đổi mốc tương đối (mai, tối thứ 5, tuần sau...) ra ngày cụ thể. "
+        'Nếu tin mô tả lịch lặp (vd "từ 15/7 đến 30/7, thứ 2 thứ 6 hàng tuần"): '
+        '"date" là NGÀY DIỄN RA ĐẦU TIÊN khớp các thứ đã nêu, "repeat.days" là các thứ, '
+        '"repeat.until" là ngày kết thúc. Lịch một lần thì "repeat": null. '
+        "Nếu tin không chứa sự kiện nào xác định được ngày, trả về []. "
         f"\n\nTin nhắn:\n{text}"
     )
     resp = requests.post(
