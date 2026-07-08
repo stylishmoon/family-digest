@@ -48,14 +48,23 @@ def main() -> None:
 
     # 4. Parse tin mới -> tạo event, gom vào pending cho digest sáng hôm sau
     for msg in new_msgs:
-        events = msg_parser.extract_events(msg["text"], today)
-        created = []
+        if msg.get("photo_file_id"):
+            try:
+                img = telegram_ingest.download_file(token, msg["photo_file_id"])
+                events = msg_parser.extract_events_from_image(
+                    img, today, caption=msg["text"])
+            except Exception as e:
+                print(f"[warn] Không tải/đọc được ảnh: {e}")
+                events = []
+            source_label = msg["text"] or "(ảnh chụp thông báo)"
+        else:
+            events = msg_parser.extract_events(msg["text"], today)
+            source_label = msg["text"]
         for e in events:
-            uid = icloud_sync.upsert_parsed_event(cal, e, msg["text"], tz)
-            created.append(uid)
+            uid = icloud_sync.upsert_parsed_event(cal, e, source_label, tz)
             print(f"[info] Tạo event: {e['title']} @ {e['date']} {e.get('time')}")
         state["pending_messages"].append({
-            "text": msg["text"],
+            "text": source_label,
             "from": msg["from"],
             "events": [e["title"] for e in events],
             "received": now.isoformat(),

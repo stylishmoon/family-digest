@@ -37,12 +37,27 @@ def fetch_new_messages(token: str, state: dict) -> list[dict]:
         msg = update.get("message") or update.get("channel_post")
         if not msg:
             continue
-        text = msg.get("text") or msg.get("caption")
-        if not text:
+        text = msg.get("text") or msg.get("caption") or ""
+        photo = msg.get("photo")  # list PhotoSize, phần tử cuối là bản to nhất
+        if not text and not photo:
             continue
-        messages.append({
+        entry = {
             "text": text,
             "from": (msg.get("from") or {}).get("first_name", "?"),
             "date_ts": msg.get("date", 0),
-        })
+        }
+        if photo:
+            entry["photo_file_id"] = photo[-1]["file_id"]
+        messages.append(entry)
     return messages
+
+
+def download_file(token: str, file_id: str) -> bytes:
+    """Tải file (ảnh) từ Telegram theo file_id."""
+    r = requests.get(API.format(token=token, method="getFile"),
+                     params={"file_id": file_id}, timeout=30)
+    r.raise_for_status()
+    path = r.json()["result"]["file_path"]
+    f = requests.get(f"https://api.telegram.org/file/bot{token}/{path}", timeout=60)
+    f.raise_for_status()
+    return f.content
