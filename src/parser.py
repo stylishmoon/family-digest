@@ -29,7 +29,10 @@ def parse_with_claude(text: str, today: dt.date, api_key: str) -> list[dict]:
         '"end_time": "HH:MM" hoặc null, "note": str, '
         '"repeat": null hoặc {"days": ["MO"|"TU"|"WE"|"TH"|"FR"|"SA"|"SU", ...], '
         '"until": "YYYY-MM-DD"}}. '
-        "Quy đổi mốc tương đối (mai, tối thứ 5, tuần sau...) ra ngày cụ thể. "
+        'Nếu tin nêu một KHOẢNG ngày được phép thực hiện việc gì đó '
+        '(vd "đóng tiền trong 10-15/7", "nộp hồ sơ từ 1 đến 5/8"): '
+        'đây là deadline — chọn "date" là NGÀY CUỐI CÙNG của khoảng, '
+        'và ghi rõ khoảng cho phép vào "note". '
         'Nếu tin mô tả lịch lặp (vd "từ 15/7 đến 30/7, thứ 2 thứ 6 hàng tuần"): '
         '"date" là NGÀY DIỄN RA ĐẦU TIÊN khớp các thứ đã nêu, "repeat.days" là các thứ, '
         '"repeat.until" là ngày kết thúc. Lịch một lần thì "repeat": null. '
