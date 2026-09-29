@@ -1,22 +1,5 @@
 {
   "telegram_offset": 518699188,
-  "pending_messages": [
-    {
-      "text": "QK NGUYEN THOAI MY ANH co lich tiem VX Soi Quai Bi Rubella ngay 28/9/26. QK vui long di dung hen de toi uu hieu qua phong benh",
-      "from": "Anh",
-      "events": [
-        "Tiêm vacxin Sởi Quai Bị Rubella"
-      ],
-      "received": "2026-09-28T20:25:35.965680+07:00"
-    },
-    {
-      "text": "(ảnh chụp thông báo)",
-      "from": "Anh",
-      "events": [
-        "Họp phụ huynh học sinh đầu năm học 2026-2027"
-      ],
-      "received": "2026-09-28T20:25:35.965680+07:00"
-    }
-  ],
+  "pending_messages": [],
   "digested_uids": []
 }
