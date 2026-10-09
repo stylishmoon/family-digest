@@ -1,14 +1,5 @@
 {
   "telegram_offset": 518699189,
-  "pending_messages": [
-    {
-      "text": "QK NGUYEN THOAI MY ANH co lich tiem VX Cum ngay 10/10/26. QK vui long di dung hen de toi uu hieu qua phong benh. LH 02871026595",
-      "from": "Anh",
-      "events": [
-        "Tiêm vắc xin Cúm"
-      ],
-      "received": "2026-10-08T17:15:48.112469+07:00"
-    }
-  ],
+  "pending_messages": [],
   "digested_uids": []
 }
